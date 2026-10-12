@@ -1,0 +1,231 @@
+---
+interface Props { locale?: 'en' | 'es'; }
+
+const { locale = 'en' } = Astro.props;
+const es = locale === 'es';
+const ids = es
+  ? { experience: 'experiencia', bakery: 'panaderia', visit: 'visitanos' }
+  : { experience: 'experience', bakery: 'bakery', visit: 'visit' };
+
+const experience = es
+  ? [
+      ['01', 'Raíces colombianas', 'Café de especialidad seleccionado por su origen, equilibrio y carácter.'],
+      ['02', 'Experiencia singular', 'Todo el ritual de una cafetería de especialidad dentro de un tráiler convertido en destino.'],
+      ['03', 'Momentos para compartir', 'Bebidas, panadería y una atención cálida que invitan a hacer una pausa.'],
+    ]
+  : [
+      ['01', 'Colombian roots', 'Specialty coffee selected for its origin, balance, and distinctive character.'],
+      ['02', 'A singular experience', 'The full specialty coffee ritual inside a trailer transformed into a destination.'],
+      ['03', 'Shareable moments', 'Drinks, baked goods, and warm service designed to make you pause and stay awhile.'],
+    ];
+
+const experienceImages = [
+  ['/experience-colombian-roots.webp', es ? 'Cafetales colombianos al amanecer' : 'Colombian coffee farm at sunrise'],
+  ['/experience-coffee-trailer.webp', es ? 'Preparación artesanal de espresso en un tráiler de café' : 'Handcrafted espresso preparation inside a coffee trailer'],
+  ['/experience-shareable-moments.webp', es ? 'Amigos compartiendo café y panadería al aire libre' : 'Friends sharing coffee and baked goods outdoors'],
+];
+const experienceImageSizes = [[1200, 675], [1200, 800], [1200, 800]];
+
+const menu = es
+  ? [
+      ['Espresso', '$3', 'Shot sencillo o doble.', 'Coffee'],
+      ['Cortadito', '$5', 'Espresso endulzado y leche vaporizada.', 'Coffee'],
+      ['Cappuccino', '$5 / $5.50', 'Espresso y leche cremosa. M / L', 'Coffee'],
+      ['Latte', '$5 / $5.50', 'Espresso y leche vaporizada. M / L', 'Coffee'],
+      ['Cold Brew', '$5 / $5.50', 'Café frío, suave y refrescante. M / L', 'Cold'],
+      ['Honey Cinnamon', '$5.50 / $6', 'Espresso, leche, miel y canela. M / L', 'Coffee'],
+      ['Americano', '$3.50', 'Espresso alargado con agua caliente.', 'Coffee'],
+      ['Flat White', '$5', 'Doble espresso y microespuma sedosa.', 'Coffee'],
+      ['Iced Latte', '$5.50', 'Espresso, leche fría y hielo.', 'Cold'],
+      ['Mocha', '$5.50 / $6', 'Espresso, chocolate y leche cremosa. M / L', 'Coffee'],
+      ['Croissant', '$4.50', 'Hojaldrado de mantequilla, dorado y crujiente.', 'Bakery'],
+      ['Pan de Bono', '$3.50', 'Pan colombiano de queso, horneado a diario.', 'Bakery'],
+      ['Guava & Cheese', '$4.75', 'Hojaldre relleno de guayaba y queso.', 'Bakery'],
+    ]
+  : [
+      ['Espresso', '$3', 'Single or double shot.', 'Coffee'],
+      ['Cortadito', '$5', 'Sweetened espresso and steamed milk.', 'Coffee'],
+      ['Cappuccino', '$5 / $5.50', 'Espresso and creamy milk. M / L', 'Coffee'],
+      ['Latte', '$5 / $5.50', 'Espresso and steamed milk. M / L', 'Coffee'],
+      ['Cold Brew', '$5 / $5.50', 'Smooth and refreshing cold coffee. M / L', 'Cold'],
+      ['Honey Cinnamon', '$5.50 / $6', 'Espresso, milk, honey, and cinnamon. M / L', 'Coffee'],
+      ['Americano', '$3.50', 'Espresso lengthened with hot water.', 'Coffee'],
+      ['Flat White', '$5', 'Double espresso with silky microfoam.', 'Coffee'],
+      ['Iced Latte', '$5.50', 'Espresso, cold milk, and ice.', 'Cold'],
+      ['Mocha', '$5.50 / $6', 'Espresso, chocolate, and creamy milk. M / L', 'Coffee'],
+      ['Croissant', '$4.50', 'Golden, crisp, all-butter pastry.', 'Bakery'],
+      ['Pan de Bono', '$3.50', 'Colombian cheese bread, baked daily.', 'Bakery'],
+      ['Guava & Cheese', '$4.75', 'Flaky pastry filled with guava and cheese.', 'Bakery'],
+    ];
+
+const menuImages = [
+  '/menu-images/espresso.webp',
+  '/menu-images/cortadito.webp',
+  '/menu-images/cappuccino.webp',
+  '/menu-images/latte.webp',
+  '/menu-images/cold-brew.webp',
+  '/menu-images/honey-cinnamon.webp',
+  '/menu-images/americano.webp',
+  '/menu-images/flat-white.webp',
+  '/menu-images/iced-latte.webp',
+  '/menu-images/mocha.webp',
+  '/menu-images/croissant.webp',
+  '/menu-images/pan-de-bono.webp',
+  '/menu-images/guava-cheese-pastry.webp',
+];
+const menuImageSizes = menuImages.map((_, index) => index < 6 ? [1200, 800] : [1200, 900]);
+
+---
+
+<section class="experience-section" id={ids.experience} aria-labelledby="experience-title">
+  <img class="experience-mark" src="/treasure-grounds-symbol.webp" alt="" width="1400" height="1087" loading="lazy" decoding="async" aria-hidden="true" />
+  <div class="section-heading section-heading-centered" data-reveal="left">
+    <p class="section-kicker">{es ? 'La experiencia' : 'The experience'}</p>
+    <h2 id="experience-title">{es ? 'Mucho más que café.' : 'More than just coffee.'}</h2>
+    <p>{es ? 'Cada taza cuenta una historia. Cada visita merece convertirse en un buen momento.' : 'Every cup tells a story. Every visit deserves to become a moment worth remembering.'}</p>
+  </div>
+  <div class="experience-grid reveal-stagger" data-reveal="right">
+    {experience.map(([number, title, description], index) => (
+      <article class="experience-card">
+        <img class="experience-card-image" src={experienceImages[index][0]} alt={experienceImages[index][1]} width={experienceImageSizes[index][0]} height={experienceImageSizes[index][1]} loading="lazy" decoding="async" />
+        <span class="experience-card-shade" aria-hidden="true"></span>
+        <span>{number}</span>
+        <h3>{title}</h3>
+        <p>{description}</p>
+      </article>
+    ))}
+  </div>
+</section>
+
+<section class="signature-expand" aria-label={es ? 'Firma de la marca' : 'Brand signature'} data-scroll-expand>
+  <div class="signature-expand-sticky">
+    <div class="signature-strip">
+      <img class="signature-background" src="/coffee-difference-background.webp" alt="" width="1800" height="720" loading="lazy" decoding="async" />
+      <span class="signature-overlay" aria-hidden="true"></span>
+      <div class="signature-scenes">
+        <div class="signature-content signature-scene signature-scene-primary">
+          <div class="signature-heading">
+            <p class="difference-kicker">{es ? '¿Por qué Treasure Grounds?' : 'Why Treasure Grounds?'}</p>
+            <h2>{es ? 'No somos un tráiler de café común.' : 'We are not your average coffee trailer.'}</h2>
+            <p>{es ? 'La diferencia está en nuestro ADN.' : 'The difference is in our DNA.'}</p>
+          </div>
+          <div class="signature-details">
+            <ul class="difference-list">
+              <li>{es ? 'Café colombiano de especialidad, de origen único.' : 'Single-origin Colombian specialty coffee.'}</li>
+              <li>{es ? 'Bebidas hechas al momento por baristas que te conocen.' : 'Drinks made to order by baristas who know you.'}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="signature-content signature-scene signature-scene-secondary">
+          <div class="signature-heading">
+            <p class="difference-kicker">{es ? 'Hecho para volver' : 'Made to return to'}</p>
+            <h2>{es ? 'Más razones para hacer una pausa.' : 'More reasons to pause.'}</h2>
+            <p>{es ? 'Café, panadería y comunidad en un solo lugar.' : 'Coffee, bakery, and community in one place.'}</p>
+          </div>
+          <div class="signature-details">
+            <ul class="difference-list">
+              <li>{es ? 'Panadería casera, fresca cada mañana.' : 'Homemade baked goods, fresh every morning.'}</li>
+              <li>{es ? 'Un tráiler convertido en destino, con recompensas para clientes frecuentes.' : 'A trailer turned destination, with rewards for regular guests.'}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section" id="menu" aria-labelledby="menu-title">
+  <div class="menu-inner">
+    <div class="section-heading menu-heading" data-reveal="left">
+      <p class="section-kicker">{es ? 'Tu ritual diario' : 'Your daily ritual'}</p>
+      <h2 id="menu-title">{es ? 'Nuestro menú.' : 'Our menu.'}</h2>
+      <p>{es ? 'Una selección de clásicos y favoritos de la casa.' : 'A selection of classics and house favorites.'}</p>
+    </div>
+    <div class="menu-categories" data-reveal="right" aria-label={es ? 'Categorías del menú' : 'Menu categories'}>
+      <span class="is-active">{es ? 'Cafés' : 'Coffee'}</span>
+      <span>{es ? 'Sin café' : 'No coffee'}</span>
+      <span>{es ? 'Panadería' : 'Bakery & bites'}</span>
+    </div>
+    <div class="menu-gallery" data-reveal="right" aria-label={es ? 'Galería estática del menú' : 'Static menu gallery'}>
+      {menu.map(([name, price, description, category], index) => (
+        <article class="menu-card" aria-label={`${name}, ${price}. ${description}`}>
+          <div class="menu-card-front">
+            <img src={menuImages[index]} alt={name} width={menuImageSizes[index][0]} height={menuImageSizes[index][1]} loading="lazy" decoding="async" />
+            <div class="menu-card-copy">
+              <small>{category}</small>
+              <h3>{name}</h3>
+              <strong>{price}</strong>
+              <p>{description}</p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="bakery-section" id={ids.bakery} aria-labelledby="bakery-title">
+  <div class="bakery-visual" data-reveal="left">
+    <img class="bakery-object" src="/treasure-grounds-carrier-cutout.webp" alt={es ? 'Portavasos y vasos de Treasure Grounds' : 'Treasure Grounds drink carrier and cups'} width="1300" height="1210" loading="lazy" decoding="async" />
+  </div>
+  <div class="bakery-copy" data-reveal="right">
+    <p class="section-kicker">{es ? 'Recién salido del horno' : 'Fresh from the oven'}</p>
+    <h2 id="bakery-title">{es ? 'Panadería artesanal, todos los días.' : 'Artisan bakery, every day.'}</h2>
+    <p>{es ? 'Más que café: productos dorados y recién horneados para acompañar tu bebida favorita.' : 'More than coffee: golden, freshly baked treats made to pair with your favorite drink.'}</p>
+    <ul>
+      <li>{es ? 'Croissants dorados y hojaldrados.' : 'Golden, flaky croissants.'}</li>
+      <li>{es ? 'Opciones de almendra, jamón y queso.' : 'Almond and ham-and-cheese options.'}</li>
+      <li>{es ? 'Pasteles de guayaba y queso, junto a clásicos colombianos.' : 'Guava-and-cheese pastries and Colombian classics.'}</li>
+    </ul>
+    <a class="light-button" href="#menu">{es ? 'Ver la selección' : 'See the selection'} <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+<section class="ritual-banner">
+  <div data-reveal="left">
+    <p class="section-kicker">Pause · Sip · Repeat</p>
+    <h2>{es ? 'Tu ritual diario, recién preparado.' : 'Your daily ritual, freshly brewed.'}</h2>
+    <a class="hero-button hero-button-primary" href="#menu">{es ? 'Ver nuestro menú' : 'See our menu'} <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+<section class="visit-section" id={ids.visit} aria-labelledby="visit-title">
+  <div class="visit-intro" data-reveal="left">
+    <p class="section-kicker">{es ? 'Encuéntranos' : 'Find us'}</p>
+    <h2 id="visit-title">{es ? 'Visita el tráiler.' : 'Visit the trailer.'}</h2>
+    <p>{es ? 'Ven por tu café favorito y quédate por la experiencia.' : 'Come for your favorite coffee and stay for the experience.'}</p>
+  </div>
+  <div class="visit-map" data-reveal="right">
+    <img class="visit-map-icon" src="/treasure-grounds-cup-map-v3.webp" alt="" width="848" height="903" loading="lazy" decoding="async" aria-hidden="true" />
+    <strong>{es ? 'Ubicación exacta próximamente' : 'Exact location coming soon'}</strong>
+    <p>{es ? 'La dirección y el mapa se publicarán antes de la apertura.' : 'The address and map will be published before opening.'}</p>
+  </div>
+  <div class="visit-details reveal-stagger" data-reveal="left">
+    <article><span>01</span><h3>{es ? 'Ubicación' : 'Location'}</h3><p>{es ? 'Dirección próximamente.' : 'Address coming soon.'}</p></article>
+    <article><span>02</span><h3>{es ? 'Horarios' : 'Hours'}</h3><p>{es ? 'Horarios de apertura próximamente.' : 'Opening hours coming soon.'}</p></article>
+    <article><span>03</span><h3>{es ? 'Contacto' : 'Contact'}</h3><p>{es ? 'Teléfono y redes próximamente.' : 'Phone and social profiles coming soon.'}</p></article>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-brand">
+    <div class="footer-identity">
+      <img src="/treasure-grounds-logo-white.webp" alt="Treasure Grounds Coffee & Bakery" width="1200" height="470" loading="lazy" decoding="async" />
+      <img class="footer-mark" src="/treasure-grounds-symbol.webp" alt="" width="1400" height="1087" loading="lazy" decoding="async" aria-hidden="true" />
+    </div>
+    <p>{es ? 'Café colombiano de especialidad y panadería fresca en un lugar hecho para hacer una pausa.' : 'Colombian specialty coffee and fresh bakery in a place designed for taking a pause.'}</p>
+    <div class="footer-socials" aria-label={es ? 'Redes sociales' : 'Social media'}>
+      <button type="button" class="footer-social" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4.25"></circle><circle cx="17.4" cy="6.7" r="1"></circle></svg>
+        <span>Instagram</span>
+      </button>
+      <button type="button" class="footer-social" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8H17V4.3c-.43-.06-1.9-.18-3.64-.18-3.6 0-6.08 2.2-6.08 6.25V14H3.2v4.15h4.08V24h5V18.15h4.03L17 14h-4.72v-3.22C12.28 9.58 12.6 8 14.5 8Z"></path></svg>
+        <span>Facebook</span>
+      </button>
+    </div>
+  </div>
+  <div><h3>{es ? 'Explora' : 'Explore'}</h3><a href={`#${ids.experience}`}>{es ? 'Experiencia' : 'Experience'}</a><a href="#menu">{es ? 'Menú' : 'Menu'}</a><a href={`#${ids.bakery}`}>{es ? 'Panadería' : 'Bakery'}</a></div>
+  <div><h3>{es ? 'Visítanos' : 'Visit'}</h3><a href={`#${ids.visit}`}>{es ? 'Ubicación' : 'Location'}</a></div>
+  <div class="footer-bottom"><span>© 2026 Treasure Grounds</span><a href={es ? '/' : '/es/'}>{es ? 'English' : 'Español'}</a></div>
+</footer>

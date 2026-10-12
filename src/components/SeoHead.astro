@@ -1,0 +1,61 @@
+---
+interface Props { locale?: 'en' | 'es'; }
+
+const { locale = 'en' } = Astro.props;
+const es = locale === 'es';
+const origin = 'https://treasuregrounds.us';
+const canonical = es ? `${origin}/es/` : `${origin}/`;
+const title = es ? 'Treasure Grounds | Café y Panadería' : 'Treasure Grounds | Coffee & Bakery';
+const description = es
+  ? 'Café colombiano de especialidad, bebidas preparadas al momento y panadería artesanal en Treasure Grounds.'
+  : 'Colombian specialty coffee, made-to-order drinks, and artisan bakery at Treasure Grounds.';
+const socialImage = `${origin}/treasure-grounds-foodtruck.webp`;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CafeOrCoffeeShop',
+  name: 'Treasure Grounds Coffee & Bakery',
+  url: canonical,
+  image: socialImage,
+  description,
+  servesCuisine: ['Coffee', 'Bakery', 'Colombian'],
+  inLanguage: es ? 'es' : 'en',
+};
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#151311" />
+<meta name="color-scheme" content="dark light" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="description" content={description} />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<title>{title}</title>
+
+<link rel="canonical" href={canonical} />
+<link rel="alternate" hreflang="en" href={`${origin}/`} />
+<link rel="alternate" hreflang="es" href={`${origin}/es/`} />
+<link rel="alternate" hreflang="x-default" href={`${origin}/`} />
+<link rel="preload" as="image" href="/treasure-grounds-foodtruck.webp" type="image/webp" fetchpriority="high" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=20261012" />
+<link rel="shortcut icon" href="/favicon.ico?v=20261012" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261012" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Treasure Grounds Coffee & Bakery" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content={es ? 'es_US' : 'en_US'} />
+<meta property="og:locale:alternate" content={es ? 'en_US' : 'es_US'} />
+<meta property="og:image" content={socialImage} />
+<meta property="og:image:width" content="3072" />
+<meta property="og:image:height" content="2048" />
+<meta property="og:image:alt" content={es ? 'Tráiler de Treasure Grounds Coffee & Bakery' : 'Treasure Grounds Coffee & Bakery trailer'} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImage} />
+<meta name="twitter:image:alt" content={es ? 'Tráiler de Treasure Grounds Coffee & Bakery' : 'Treasure Grounds Coffee & Bakery trailer'} />
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

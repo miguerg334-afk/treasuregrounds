@@ -1,0 +1,61 @@
+---
+interface Props { locale?: 'en' | 'es'; }
+
+const { locale = 'en' } = Astro.props;
+const isSpanish = locale === 'es';
+const navigation = isSpanish
+  ? [
+      { label: 'Inicio', href: '#inicio' },
+      { label: 'Nuestra historia', href: '#historia' },
+      { label: 'Menú', href: '#menu' },
+      { label: 'Visítanos', href: '#visitanos' },
+    ]
+  : [
+      { label: 'Home', href: '#home' },
+      { label: 'Our story', href: '#story' },
+      { label: 'Menu', href: '#menu' },
+      { label: 'Visit us', href: '#visit' },
+    ];
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <nav class="desktop-nav nav-left" aria-label={isSpanish ? 'Navegación principal' : 'Main navigation'}>
+      {navigation.slice(0, 2).map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+
+    <a class="brand" href={isSpanish ? '#inicio' : '#home'} aria-label={isSpanish ? 'Treasure Grounds, ir al inicio' : 'Treasure Grounds, go to home'}>
+      <img src="/treasure-grounds-logo-white.webp" alt="Treasure Grounds Coffee & Bakery" width="1200" height="470" />
+    </a>
+
+    <nav class="desktop-nav nav-right" aria-label={isSpanish ? 'Más enlaces' : 'More links'}>
+      {navigation.slice(2).map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+
+    <a class="language-switch" href={isSpanish ? '/' : '/es/'} lang={isSpanish ? 'en' : 'es'} hreflang={isSpanish ? 'en' : 'es'} aria-label={isSpanish ? 'Switch to English' : 'Cambiar a español'}>
+      <svg class="language-icon" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.25" />
+        <path d="M1.9 8h12.2M8 1.75c1.55 1.7 2.35 3.78 2.35 6.25S9.55 12.55 8 14.25C6.45 12.55 5.65 10.47 5.65 8S6.45 3.45 8 1.75Z" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" />
+      </svg>
+      <span>{isSpanish ? 'EN' : 'ES'}</span>
+      <span class="language-arrow" aria-hidden="true">↗</span>
+    </a>
+
+    <details class="mobile-navigation">
+      <summary aria-label={isSpanish ? 'Abrir menú' : 'Open menu'}>
+        <span class="menu-icon" aria-hidden="true"><span></span><span></span></span>
+        <span class="menu-label">{isSpanish ? 'Menú' : 'Menu'}</span>
+      </summary>
+      <nav aria-label={isSpanish ? 'Navegación móvil' : 'Mobile navigation'}>
+        {navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  const mobileMenu = document.querySelector<HTMLDetailsElement>('.mobile-navigation');
+  mobileMenu?.querySelectorAll('nav a').forEach((link) => {
+    link.addEventListener('click', () => { mobileMenu.open = false; });
+  });
+</script>

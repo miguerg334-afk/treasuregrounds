@@ -1,0 +1,87 @@
+---
+import SiteHeader from '../../components/SiteHeader.astro';
+import HomeSections from '../../components/HomeSections.astro';
+import ScrollReveals from '../../components/ScrollReveals.astro';
+import SeoHead from '../../components/SeoHead.astro';
+import '../../styles/global.css';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <SeoHead locale="es" />
+  </head>
+  <body>
+    <div class="page-shell" id="inicio">
+      <SiteHeader locale="es" />
+      <main>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-image" role="img" aria-label="Tráiler de Treasure Grounds Coffee & Bakery"></div>
+          <div class="hero-shade" aria-hidden="true"></div>
+          <div class="hero-light" aria-hidden="true"></div>
+          <div class="hero-content">
+            <div class="hero-headline">
+              <p class="hero-kicker">Treasure Grounds · Coffee & Bakery</p>
+              <h1 id="hero-title" class="hero-title">CAFÉ <span class="hero-title-outline">JUSTO</span><br />AQUÍ</h1>
+            </div>
+            <div class="hero-aside">
+              <p class="hero-description">Una pausa para disfrutar buen café y panadería artesanal en un lugar pensado para formar parte de tu rutina.</p>
+              <div class="hero-actions">
+                <a class="hero-button hero-button-primary" href="#menu">Descubre el menú <span aria-hidden="true">↗</span></a>
+                <a class="hero-button hero-button-outline" href="#visitanos">Encuéntranos</a>
+              </div>
+            </div>
+          </div>
+        </section>
+        <script is:inline>
+          (() => {
+            const hero = document.querySelector('.hero');
+            if (hero && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+              requestAnimationFrame(() => hero.classList.add('is-entered'));
+            }
+          })();
+        </script>
+        <section class="story-section" id="historia" aria-labelledby="story-title" data-coffee-fill>
+          <div class="coffee-fill" aria-hidden="true"></div>
+          <div class="story-inner">
+            <div class="story-copy" data-reveal="left">
+              <p class="story-kicker">Treasure Grounds · Coffee & Bakery</p>
+              <h2 id="story-title">Una pausa que va contigo.</h2>
+              <p>Creemos que un buen café puede transformar cualquier momento. Preparamos cada bebida y cada bocado para que disfrutes algo especial, estés donde estés.</p>
+              <a class="story-button" href="#menu">Conoce nuestro menú <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="cup-stage" data-reveal="right">
+              <img class="story-cup" src="/treasure-grounds-cup.webp" alt="Vaso de café Treasure Grounds" width="1195" height="1316" loading="lazy" />
+              <svg class="cup-arrows" viewBox="0 0 600 600" fill="none" aria-hidden="true">
+                <defs><marker id="cup-arrow-tip" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M1 1 10 6 1 11" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" /></marker></defs>
+                <path d="M555 58 C540 91 520 112 470 131" marker-end="url(#cup-arrow-tip)" />
+                <path d="M35 310 C70 281 106 273 153 289" marker-end="url(#cup-arrow-tip)" />
+                <path d="M565 513 C518 502 482 473 458 432" marker-end="url(#cup-arrow-tip)" />
+              </svg>
+            </div>
+          </div>
+        </section>
+        <HomeSections locale="es" />
+      </main>
+    </div>
+    <ScrollReveals />
+    <script>
+      import Lenis from 'lenis';
+      import 'lenis/dist/lenis.css';
+
+      new Lenis({
+        lerp: 0.065,
+        autoRaf: true,
+        autoResize: true,
+        anchors: true,
+        smoothWheel: true,
+        wheelMultiplier: 0.85,
+        syncTouch: true,
+        syncTouchLerp: 0.075,
+        touchInertiaExponent: 1.7,
+        touchMultiplier: 1.05,
+      });
+
+    </script>
+  </body>
+</html>
